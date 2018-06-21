@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">AndroidProficiency</string>
+    <string name="appbar_scrolling_view_behavior">test</string>
+    <string name="action_settings">Settings</string>
+</resources>
