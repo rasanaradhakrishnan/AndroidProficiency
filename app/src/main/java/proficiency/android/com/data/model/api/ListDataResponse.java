@@ -17,4 +17,11 @@ public final class ListDataResponse {
     @SerializedName("rows")
     private List<ListData> listData;
 
+    public String getTitle() {
+        return title;
+    }
+
+    public List<ListData> getListData() {
+        return listData;
+    }
 }

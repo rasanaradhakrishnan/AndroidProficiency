@@ -25,6 +25,9 @@ android {
             buildConfigField("String", "BASE_URL", "\"https://dl.dropboxusercontent.com/s\"")
         }
     }
+    packagingOptions {
+        exclude 'META-INF/rxjava.properties'
+    }
 }
 
 dependencies {
@@ -48,7 +51,9 @@ dependencies {
     implementation "com.google.dagger:dagger-android-support:$rootProject.dagger2Version"
 
     // reactive
-    implementation "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:$rootProject.rx2RetrofitNetworking"
+    implementation "com.squareup.retrofit2:adapter-rxjava:$rootProject.rx2RetrofitNetworking"
+    implementation "io.reactivex:rxandroid:$rootProject.rxAndroid"
+    implementation "io.reactivex:rxjava:$rootProject.rxJava"
     implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofitGsonConvertor"
     implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.loggingInterceptor"
 

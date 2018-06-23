@@ -5,10 +5,13 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
 import java.io.IOException;
 import java.io.InputStream;
 
+import javax.inject.Singleton;
+
+import dagger.Module;
+import dagger.Provides;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -16,11 +19,11 @@ import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import proficiency.android.com.ui.BuildConfig;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Url;
 
 
-
+@Module
 public class ServiceCall {
 
     private static final String LOG_TAG = "ServiceCall";
@@ -41,14 +44,16 @@ public class ServiceCall {
         return json;
     }
 
-    public static INetworkService getNetWorkService() {
+    @Provides
+    @Singleton
+    public INetworkService getNetWorkService() {
         Gson gson = new GsonBuilder()
                 .setLenient()
                 .create();
-        InfyEComInterceptor eComInterceptor = new InfyEComInterceptor();
+        AndroidProficiencyInterceptor proficiencyInterceptor = new AndroidProficiencyInterceptor();
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         // add your other interceptors …
-        httpClient.addInterceptor(eComInterceptor);
+        httpClient.addInterceptor(proficiencyInterceptor);
         // add logging as last interceptor
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -57,6 +62,7 @@ public class ServiceCall {
                 .baseUrl(BuildConfig.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(httpClient.build())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
         return retrofit.create(INetworkService.class);
     }
@@ -64,9 +70,9 @@ public class ServiceCall {
     /**
      * Interceptor to Add Request Headers depending on request type and user type
      */
-    private static class InfyEComInterceptor implements Interceptor {
+    private static class AndroidProficiencyInterceptor implements Interceptor {
 
-        public InfyEComInterceptor() {
+        public AndroidProficiencyInterceptor() {
         }
 
         @Override

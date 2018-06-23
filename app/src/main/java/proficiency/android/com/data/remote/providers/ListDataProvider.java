@@ -1,39 +1,50 @@
 package proficiency.android.com.data.remote.providers;
 
-import android.content.Context;
-
 import proficiency.android.com.data.ListDataListener;
 import proficiency.android.com.data.errors.NetworkErrorParser;
-import proficiency.android.com.data.local.db.AppDbHelper;
 import proficiency.android.com.data.model.api.ListDataResponse;
-import proficiency.android.com.data.remote.CustomCallback;
 import proficiency.android.com.data.remote.ServiceCall;
-import retrofit2.Call;
-import retrofit2.Response;
 import retrofit2.Retrofit;
+import rx.Observable;
+import rx.Subscriber;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
 
 public class ListDataProvider {
 
-    public static void getListDataFromServer(final Context context, String url, final ListDataListener listDataListener) {
+    public  Subscription getListDataFromServer(final ListDataListener listDataListener) {
 
         Retrofit retrofit;
-        Call<ListDataResponse> networkCall = ServiceCall.getNetWorkService().getProfile();
-        networkCall.enqueue(new CustomCallback<ListDataResponse>(new CustomCallback.CustomCall() {
-            @Override
-            public void onSuccess(Response response) {
-                ListDataResponse responseData = (ListDataResponse) response.body();
-                if (listDataListener != null) {
-                    listDataListener.onCompleteLoading(responseData);
-                }
-            }
 
-            @Override
-            public void onError(NetworkErrorParser networkError) {
-                if (listDataListener != null) {
-                    listDataListener.onError(networkError.getNetworkError().getMessage());
-                }
-            }
-        }));
+
+        return new ServiceCall().getNetWorkService().getProfile() .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .onErrorResumeNext(new Func1<Throwable, Observable<? extends ListDataResponse>>() {
+                    @Override
+                    public Observable<? extends ListDataResponse> call(Throwable throwable) {
+                        return Observable.error(throwable);
+                    }
+                })
+                .subscribe(new Subscriber<ListDataResponse>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        listDataListener.onError(new NetworkErrorParser(e).getNetworkError().getMessage());
+
+                    }
+
+                    @Override
+                    public void onNext(ListDataResponse listDataResponse) {
+                        listDataListener.onCompleteLoading(listDataResponse);
+
+                    }
+                });
     }
 }

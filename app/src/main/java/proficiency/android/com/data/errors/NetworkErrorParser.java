@@ -5,7 +5,6 @@ import retrofit2.Response;
 
 /**
  * * This is error class for all network errors
- * Created by rasana_r on 3/9/2017.
  */
 public class NetworkErrorParser {
 
