@@ -3,11 +3,10 @@ package proficiency.android.com.ui.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import com.squareup.picasso.Picasso
 import proficiency.android.com.di.executor.entitymodel.ListDataRowModel
+import proficiency.android.com.ui.BuildConfig
 import proficiency.android.com.ui.R
 
 class ListDataAdapter(var dataModelList: List<ListDataRowModel>?) : BaseAdapter() {
@@ -21,6 +20,7 @@ class ListDataAdapter(var dataModelList: List<ListDataRowModel>?) : BaseAdapter(
 
         }
         holder = ViewHolder(view!!)
+        holder.rowLayout.setBackgroundColor(view.resources.getColor(R.color.list_background))
         // set the view's size, margins, paddings and layout parameters
         holder.mName.text= dataModelList!!.get(position).title
         holder.mDescription.text = dataModelList!!.get(position).description
@@ -49,11 +49,13 @@ class ListDataAdapter(var dataModelList: List<ListDataRowModel>?) : BaseAdapter(
         internal val mName: TextView
         internal val mDescription: TextView
         internal val rowImage: ImageView
+        internal val rowLayout: LinearLayout
 
         init {
             mName = v.findViewById(R.id.rowHeading)
             mDescription = v.findViewById(R.id.rowDescription)
             rowImage = v.findViewById(R.id.rowImage)
+            rowLayout = v.findViewById(R.id.rowLayout)
         }
     }
 

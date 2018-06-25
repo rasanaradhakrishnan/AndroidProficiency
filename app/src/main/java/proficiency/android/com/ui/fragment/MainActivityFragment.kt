@@ -1,24 +1,20 @@
 package proficiency.android.com.ui.fragment
 
-import android.support.v4.app.Fragment
+import android.app.Activity
+import android.app.ProgressDialog
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v7.widget.RecyclerView
+import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.activity_main.*
+import android.widget.ListView
+import android.widget.Toast
 import proficiency.android.com.di.executor.ListDataExecutor
 import proficiency.android.com.di.executor.entitymodel.ListDataModel
 import proficiency.android.com.di.executor.entitymodel.ListDataRowModel
 import proficiency.android.com.di.executor.interactor.ListModelListener
 import proficiency.android.com.ui.R
 import proficiency.android.com.ui.adapter.ListDataAdapter
-import proficiency.android.com.ui.constants.ListConstants
-import android.app.Activity
-import android.widget.ListView
-import android.os.AsyncTask.execute
-import android.os.Parcel
 
 
 /**
@@ -29,14 +25,6 @@ class MainActivityFragment : Fragment(), ListModelListener {
     private var listRowAdapter: ListDataAdapter? = null
     var listRowModel:List<ListDataRowModel>? = null
     private var mListener: OnFragmentInteractionListener? = null
-
-
-    companion object {
-        fun  newInstance():MainActivityFragment {
-            val mainActivityFragment = MainActivityFragment();
-            return mainActivityFragment;
-        }
-    }
 
     /**
      * This method will only be called once when the retained
@@ -65,7 +53,7 @@ class MainActivityFragment : Fragment(), ListModelListener {
         try {
             mListener = activity as OnFragmentInteractionListener?
         } catch (e: ClassCastException) {
-            throw ClassCastException(activity!!.toString() + " must implement OnFragmentInteractionListener")
+            throw ClassCastException(activity!!.toString())
         }
 
     }
@@ -88,10 +76,7 @@ class MainActivityFragment : Fragment(), ListModelListener {
     }
 
     override fun onError(message: String?) {
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, R.string.error_message, Snackbar.LENGTH_LONG)
-                    .setAction(R.string.retry, null).show()
-        }
+        Toast.makeText(activity, R.string.error_message, Toast.LENGTH_LONG).show()
     }
 
     interface OnFragmentInteractionListener {
