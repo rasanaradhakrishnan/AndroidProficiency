@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginEnd="@dimen/fab_margin"
+    android:layout_marginRight="@dimen/fab_margin"
+    android:layout_marginStart="@dimen/fab_margin"
+    android:layout_marginLeft="@dimen/fab_margin">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rowHeading"
+        android:textSize="@dimen/heading_text"
+        android:textColor="@android:color/holo_blue_dark"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <ImageView
+        android:layout_width="@dimen/image_size"
+        android:layout_height="@dimen/image_size"
+        android:id="@+id/rowImage"
+        android:layout_below="@id/rowHeading"
+        android:layout_marginTop="@dimen/content_margin"
+        android:layout_marginBottom="@dimen/content_margin"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="@dimen/fab_margin"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="@dimen/fab_margin" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/rowDescription"
+        android:textSize="@dimen/description_text"
+        android:layout_marginTop="@dimen/content_margin"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:textColor="@android:color/background_dark"
+        android:layout_below="@id/rowHeading"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@id/rowImage"
+        android:layout_marginBottom="@dimen/content_margin"
+        android:layout_marginRight="@dimen/fab_margin"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@id/rowImage" />
+</RelativeLayout>
+</LinearLayout>
