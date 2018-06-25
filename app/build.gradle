@@ -17,7 +17,7 @@ android {
     }
     buildTypes {
         debug {
-            buildConfigField("String", "BASE_URL", "\"https://dl.dropboxusercontent.com/s\"")
+            buildConfigField("String", "BASE_URL", "\"http://dl.dropboxusercontent.com/s/\"")
         }
         release {
             minifyEnabled true
@@ -43,6 +43,9 @@ dependencies {
 
     // parser
     implementation "com.google.code.gson:gson:$rootProject.gsonVersion"
+
+    //image caching
+    implementation "com.squareup.picasso:picasso:$rootProject.picassoCaching"
 
     // dependency injection
     implementation "com.google.dagger:dagger:$rootProject.dagger2Version"

@@ -46,6 +46,7 @@ ext {
     rxJava= '1.1.6'
     retrofitGsonConvertor = '2.2.0'
     loggingInterceptor='3.4.1'
+    picassoCaching = '2.71828'
 
     dagger2Version = '2.14.1'
     debugDBVersion = '1.0.3'
