@@ -4,4 +4,5 @@
     <dimen name="image_size">75dp</dimen>
     <dimen name="heading_text">20sp</dimen>
     <dimen name="description_text">16sp</dimen>
+    <dimen name="list_divider">1dp</dimen>
 </resources>

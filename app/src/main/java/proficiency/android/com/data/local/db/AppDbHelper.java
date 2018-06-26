@@ -6,8 +6,8 @@ import java.util.concurrent.Callable;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import io.reactivex.Observable;
 import proficiency.android.com.data.model.db.ListData;
+import rx.Observable;
 
 
 @Singleton
@@ -36,17 +36,6 @@ public class AppDbHelper implements DbHelper {
             @Override
             public Boolean call() throws Exception {
                 return mAppDatabase.listDataDao().loadAll().isEmpty();
-            }
-        });
-    }
-
-    @Override
-    public Observable<Boolean> saveListData(final ListData listData) {
-        return Observable.fromCallable(new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                mAppDatabase.listDataDao().insert(listData);
-                return true;
             }
         });
     }

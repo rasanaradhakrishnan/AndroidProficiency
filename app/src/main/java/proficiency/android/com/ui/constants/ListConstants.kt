@@ -1,8 +1,11 @@
 package proficiency.android.com.ui.constants
 
+import proficiency.android.com.ui.BuildConfig
+
 class ListConstants {
 
     companion object {
-        var LIST_ARRAYLIST : String = "listArraylist"
+        var NAME : String = "Android"
+        val DB_NAME : String = "AndroidProficiency"
     }
 }

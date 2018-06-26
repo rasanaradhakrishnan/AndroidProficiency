@@ -2,6 +2,7 @@ package proficiency.android.com.ui.activity
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.Window
 import kotlinx.android.synthetic.main.activity_main.*
 import proficiency.android.com.ui.R
 import proficiency.android.com.ui.fragment.MainActivityFragment

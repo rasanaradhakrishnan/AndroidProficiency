@@ -45,10 +45,12 @@
         android:layout_width="@dimen/image_size"
         android:layout_height="@dimen/image_size"
         android:id="@+id/rowImage"
+        android:layout_marginLeft="@dimen/content_margin"
         android:layout_alignParentRight="true"
         android:layout_marginTop="@dimen/content_margin"
         android:layout_marginBottom="@dimen/content_margin"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="@dimen/content_margin" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
