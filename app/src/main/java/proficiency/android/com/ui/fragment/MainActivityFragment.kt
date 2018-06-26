@@ -25,10 +25,10 @@ import proficiency.android.com.util.ListDataUtil
 class MainActivityFragment : Fragment(), ListModelListener {
 
     private var listRowAdapter: ListDataAdapter? = null
-    var listRowModel:List<ListDataRowModel>? = null
+    private var listRowModel:List<ListDataRowModel>? = null
     private var mListener: OnFragmentInteractionListener? = null
-    var pb:ProgressBar? = null
-    var mExecutor:ListDataExecutor?=null
+    private var pb:ProgressBar? = null
+    private var mExecutor:ListDataExecutor?=null
 
     /**
      * This method will only be called once when the retained
@@ -50,7 +50,7 @@ class MainActivityFragment : Fragment(), ListModelListener {
         // show progress bar
         pb = view.findViewById(R.id.pbLoading)
         pb!!.visibility = ProgressBar.VISIBLE
-        mExecutor = ListDataExecutor(activity)
+        mExecutor = ListDataExecutor(activity!!.applicationContext)
         if (ListDataUtil.isConnected(activity!!.applicationContext)) {
             mExecutor!!.getListData(this)
         }else{
@@ -59,7 +59,7 @@ class MainActivityFragment : Fragment(), ListModelListener {
 
         mRecyclerView.adapter = listRowAdapter
 
-        fab.setOnClickListener { view ->
+        fab.setOnClickListener { _ ->
             pb!!.visibility = ProgressBar.VISIBLE
             if (ListDataUtil.isConnected(activity!!.applicationContext)) {
                 mExecutor!!.getListData(this)
@@ -67,7 +67,7 @@ class MainActivityFragment : Fragment(), ListModelListener {
                 mExecutor!!.getDataFromDB(this)
             }
         }
-        return view;
+        return view
     }
 
     override fun onAttach(activity: Activity?) {
@@ -92,9 +92,9 @@ class MainActivityFragment : Fragment(), ListModelListener {
         if (mListener != null) {
             if (listDataModel != null) {
                 mListener!!.onFragmentInteraction(listDataModel.getmTitle())
-            };
+            }
         }
-        listRowModel = listDataModel?.getListData()
+        listRowModel = listDataModel?.listData
         listRowAdapter!!.dataModelList = listRowModel
         listRowAdapter!!.notifyDataSetChanged()
     }
@@ -103,14 +103,14 @@ class MainActivityFragment : Fragment(), ListModelListener {
         // run a background job and once complete
         pb!!.visibility = ProgressBar.INVISIBLE
         Snackbar.make(activity!!.findViewById(android.R.id.content),
-                R.string.error_message, Snackbar.LENGTH_INDEFINITE).setAction(R.string.retry, View.OnClickListener {
-            pb!!.visibility = ProgressBar.VISIBLE
-            if (ListDataUtil.isConnected(activity!!.applicationContext)) {
-                mExecutor!!.getListData(this)
-            }else{
-                mExecutor!!.getDataFromDB(this)
-            }
-        }).show();
+                R.string.error_message, Snackbar.LENGTH_INDEFINITE).setAction(R.string.retry) {
+                    pb!!.visibility = ProgressBar.VISIBLE
+                    if (ListDataUtil.isConnected(activity!!.applicationContext)) {
+                        mExecutor!!.getListData(this)
+                    }else{
+                        mExecutor!!.getDataFromDB(this)
+                    }
+                }.show()
     }
 
     interface OnFragmentInteractionListener {

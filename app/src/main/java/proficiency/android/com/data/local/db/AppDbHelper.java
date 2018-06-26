@@ -9,7 +9,9 @@ import javax.inject.Singleton;
 import proficiency.android.com.data.model.db.ListData;
 import rx.Observable;
 
-
+/**
+ * This is the helper class for all database related operations.
+ */
 @Singleton
 public class AppDbHelper implements DbHelper {
 
