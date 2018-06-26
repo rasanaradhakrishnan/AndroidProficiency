@@ -3,6 +3,6 @@
     <color name="app_white">#ffffff</color>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#ffffff</color>
     <color name="list_background">#e8ecf2</color>
 </resources>

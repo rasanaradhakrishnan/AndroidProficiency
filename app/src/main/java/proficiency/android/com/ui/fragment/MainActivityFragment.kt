@@ -16,6 +16,7 @@ import proficiency.android.com.di.executor.entitymodel.ListDataRowModel
 import proficiency.android.com.di.executor.interactor.ListModelListener
 import proficiency.android.com.ui.R
 import proficiency.android.com.ui.adapter.ListDataAdapter
+import proficiency.android.com.util.ListDataUtil
 
 
 /**
@@ -49,14 +50,22 @@ class MainActivityFragment : Fragment(), ListModelListener {
         // show progress bar
         pb = view.findViewById(R.id.pbLoading)
         pb!!.visibility = ProgressBar.VISIBLE
-
         mExecutor = ListDataExecutor(activity)
-        mExecutor!!.getListData(this)
+        if (ListDataUtil.isConnected(activity!!.applicationContext)) {
+            mExecutor!!.getListData(this)
+        }else{
+            mExecutor!!.getDataFromDB(this)
+        }
+
         mRecyclerView.adapter = listRowAdapter
 
         fab.setOnClickListener { view ->
             pb!!.visibility = ProgressBar.VISIBLE
-            mExecutor!!.getListData(this)
+            if (ListDataUtil.isConnected(activity!!.applicationContext)) {
+                mExecutor!!.getListData(this)
+            }else{
+                mExecutor!!.getDataFromDB(this)
+            }
         }
         return view;
     }
@@ -96,7 +105,11 @@ class MainActivityFragment : Fragment(), ListModelListener {
         Snackbar.make(activity!!.findViewById(android.R.id.content),
                 R.string.error_message, Snackbar.LENGTH_INDEFINITE).setAction(R.string.retry, View.OnClickListener {
             pb!!.visibility = ProgressBar.VISIBLE
-            mExecutor!!.getListData(this)
+            if (ListDataUtil.isConnected(activity!!.applicationContext)) {
+                mExecutor!!.getListData(this)
+            }else{
+                mExecutor!!.getDataFromDB(this)
+            }
         }).show();
     }
 

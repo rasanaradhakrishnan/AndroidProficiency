@@ -15,6 +15,7 @@ import proficiency.android.com.data.remote.providers.ListDataProvider;
 import proficiency.android.com.di.executor.ListDataFactory.LisDataFactory;
 import proficiency.android.com.di.executor.interactor.ListModelListener;
 import proficiency.android.com.ui.constants.ListConstants;
+import proficiency.android.com.util.ListDataUtil;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
@@ -45,7 +46,6 @@ public class ListDataExecutor {
 
             @Override
             public void onError(String message) {
-                onStop();
                 listModelListener.onError(message);
             }
         });
@@ -53,7 +53,7 @@ public class ListDataExecutor {
         subscriptions.add(subscription);
     }
 
-    private void onStop() {
+    public void onStop() {
         subscriptions.unsubscribe();
     }
 
@@ -70,7 +70,6 @@ public class ListDataExecutor {
 
                     @Override
                     public void onError(Throwable e) {
-                        onStop();
                         listModelListener.onError(e.getMessage());
 
                     }
@@ -79,13 +78,12 @@ public class ListDataExecutor {
                     public void onNext(Boolean aBoolean) {
                         LisDataFactory lisDataFactory = new LisDataFactory();
                         lisDataFactory.generateListData(listDataResponse,listModelListener);
-                        onStop();
                     }
                 });
         subscriptions.add(subscription);
     }
 
-    private void getDataFromDB(final ListModelListener listModelListener){
+    public void getDataFromDB(final ListModelListener listModelListener){
         AppDatabase db = Room.databaseBuilder(context,
                 AppDatabase.class, ListConstants.Companion.getDB_NAME()).build();
         Subscription subscription = new AppDbHelper(db).getAllListData().subscribeOn(Schedulers.io())
@@ -98,7 +96,6 @@ public class ListDataExecutor {
 
                     @Override
                     public void onError(Throwable e) {
-                        onStop();
                         listModelListener.onError(e.getMessage());
 
                     }
@@ -107,7 +104,6 @@ public class ListDataExecutor {
                     public void onNext(List<ListData> listData) {
                         LisDataFactory lisDataFactory = new LisDataFactory();
                         lisDataFactory.generateListDataDb(listData,listModelListener);
-                        onStop();
                     }
                 });
         subscriptions.add(subscription);
